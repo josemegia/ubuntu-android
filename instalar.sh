@@ -9,18 +9,12 @@ REPO="josemegia/ubuntu-android"
 RAMA="main"
 DISTRO="ubuntu"
 USUARIO="android"
+NOMBRE_RC="android"   # nombre en Remote Control (claude.ai/code y app de Claude)
 CARPETA_MOVIL="/storage/emulated/0/Download/Ubuntu"   # se ve como ~/Descargas dentro de Ubuntu
 
 paso() { printf '\n\033[1;32m==> %s\033[0m\n' "$*"; }
 aviso() { printf '\033[1;33m%s\033[0m\n' "$*"; }
 fallo() { printf '\033[1;31mError: %s\033[0m\n' "$*" >&2; exit 1; }
-
-# Preguntas: leer del teclado aunque el script llegue por "curl | bash".
-preguntar() {  # preguntar "texto" "valor por defecto"
-  local r=""
-  if [ -r /dev/tty ]; then read -r -p "$1 [$2]: " r </dev/tty || true; fi
-  printf '%s' "${r:-$2}"
-}
 
 [ -d /data/data/com.termux ] && [ -n "${PREFIX:-}" ] || fallo "esto se ejecuta en Termux, no dentro de Ubuntu."
 
@@ -65,8 +59,6 @@ else
 fi
 
 # 5. Configurar Ubuntu (paquetes, usuario, Claude Code, utilidades)
-NOMBRE_RC="$(preguntar "Nombre con el que verás este móvil en Claude (Remote Control)" "Android")"
-NOMBRE_RC="$(printf '%s' "$NOMBRE_RC" | tr -cd 'A-Za-z0-9_-')"; NOMBRE_RC="${NOMBRE_RC:-Android}"
 ZONA="$(getprop persist.sys.timezone 2>/dev/null || true)"
 paso "Configurando Ubuntu (puede tardar varios minutos)"
 proot-distro login "$DISTRO" -- env ZONA="${ZONA:-Europe/Madrid}" \

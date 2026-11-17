@@ -3,7 +3,7 @@
 # El nombre sale de ~/.config/ubuntu-android/config (NOMBRE_RC=...).
 # Ver la sesión:  tmux attach -t <nombre>   (salir sin cerrarla: Ctrl+b y luego d)
 CONFIG="$HOME/.config/ubuntu-android/config"
-NOMBRE_RC=Android
+NOMBRE_RC=android
 [ -f "$CONFIG" ] && . "$CONFIG"
 CLAUDE="$HOME/.local/bin/claude"
 

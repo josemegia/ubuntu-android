@@ -19,7 +19,7 @@ desde el propio móvil o en remoto desde [claude.ai/code](https://claude.ai/code
 5. Escribe `claude` e inicia sesión (necesitas una cuenta de Claude Pro o superior).
 
 A partir de ahí, cada vez que abras Termux, Claude arranca solo en segundo plano y
-aparece en claude.ai/code con el nombre que elegiste durante la instalación.
+aparece en claude.ai/code con el nombre `android`.
 
 **Recomendado:** Ajustes de Android → Apps → Termux → Batería → *Sin restricciones*,
 para que Android no cierre Termux.

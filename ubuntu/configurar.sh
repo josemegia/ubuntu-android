@@ -3,7 +3,7 @@
 # Uso: configurar.sh <usuario> <nombre-remote-control>
 set -euo pipefail
 USUARIO="${1:-android}"
-NOMBRE_RC="${2:-Android}"
+NOMBRE_RC="${2:-android}"
 AQUI="$(cd "$(dirname "$0")" && pwd)"
 export DEBIAN_FRONTEND=noninteractive
 
