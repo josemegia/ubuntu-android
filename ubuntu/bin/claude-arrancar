@@ -1,0 +1,40 @@
+#!/bin/bash
+# Arranca Claude Code con Remote Control en una sesión tmux, si no está ya activo.
+# El nombre sale de ~/.config/ubuntu-android/config (NOMBRE_RC=...).
+# Ver la sesión:  tmux attach -t <nombre>   (salir sin cerrarla: Ctrl+b y luego d)
+CONFIG="$HOME/.config/ubuntu-android/config"
+NOMBRE_RC=Android
+[ -f "$CONFIG" ] && . "$CONFIG"
+CLAUDE="$HOME/.local/bin/claude"
+
+[ -x "$CLAUDE" ] || exit 0
+command -v tmux >/dev/null || { echo "claude-arrancar: falta tmux"; exit 1; }
+
+# Sin sesión iniciada no se puede arrancar en segundo plano: avisar y salir.
+if [ ! -s "$HOME/.claude/.credentials.json" ]; then
+  echo "Claude aún no tiene sesión: escribe  claude  e inicia sesión una vez."
+  echo "Después arrancará solo al abrir Termux."
+  exit 0
+fi
+
+# ¿Ya hay un claude con este Remote Control corriendo?
+if ps -eo args= | grep -Eq '^(\S*/)?claude .*(--rc|--remote-control)[ =]'"$NOMBRE_RC"'( |$)'; then
+  exit 0
+fi
+tmux has-session -t "$NOMBRE_RC" 2>/dev/null && exit 0
+
+cd "$HOME" && tmux new-session -d -s "$NOMBRE_RC" "$CLAUDE --rc $NOMBRE_RC" \
+  && echo "Claude Remote Control '$NOMBRE_RC' arrancado (ver: tmux attach -t $NOMBRE_RC)" || exit 1
+
+# En la carpeta home la confianza no se guarda: aceptar el aviso "trust this folder" solo.
+(
+  for _ in $(seq 1 60); do
+    sleep 1
+    tmux has-session -t "$NOMBRE_RC" 2>/dev/null || exit 0
+    if timeout 5 tmux capture-pane -p -t "$NOMBRE_RC" | grep -q "Yes, I trust this folder"; then
+      tmux send-keys -t "$NOMBRE_RC" Down Enter
+      exit 0
+    fi
+  done
+) >/dev/null 2>&1 &
+disown 2>/dev/null || true
