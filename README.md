@@ -55,7 +55,7 @@ para que Android no cierre Termux.
 | Ubuntu (último LTS) | usuario `android` con `sudo` sin contraseña, en español |
 | `~/Descargas` | es la carpeta *Download/Ubuntu* del móvil: lo que guardes ahí lo ves en Android y al revés |
 | Claude Code | arranca solo en tmux con Remote Control (`tmux attach -t <nombre>` para verlo; salir con `Ctrl+b` y `d`) |
-| `OGG` | copia los últimos audios de WhatsApp y WhatsApp Business a *Download/Ubuntu/Transcribir*. `OGG 10` copia 10 |
+| `OGG` | copia los últimos audios de WhatsApp a *Download/Ubuntu/Transcribir* y los pasa a texto. `OGG hoy`, `OGG 1h`, `OGG resumen` (Claude te dice qué responder), `OGG enviados` |
 | Herramientas | git, gh (GitHub), tmux, python3, ffmpeg, curl, nano |
 | Kit de marketing | ver abajo |
 
