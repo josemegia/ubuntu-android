@@ -16,6 +16,16 @@ ORIGENES = {  # carpeta: prefijo para no mezclar nombres iguales
     f"{W}/com.whatsapp.w4b/WhatsApp Business/Media/WhatsApp Business Voice Notes": "WAB",
     f"{W}/com.whatsapp.w4b/WhatsApp Business/Media/WhatsApp Business Audio": "WAB",
 }
+# Segundas cuentas de WhatsApp en el mismo móvil: .../accounts/<n>/Media/...
+for _app, _dir, _pref in (("com.whatsapp", "WhatsApp", "WA"), ("com.whatsapp.w4b", "WhatsApp Business", "WAB")):
+    try:
+        _cuentas = os.listdir(f"{W}/{_app}/{_dir}/accounts")
+    except OSError:
+        _cuentas = []
+    for _c in _cuentas:
+        _sub = "WhatsApp Business" if _pref == "WAB" else "WhatsApp"
+        ORIGENES[f"{W}/{_app}/{_dir}/accounts/{_c}/Media/{_sub} Voice Notes"] = f"{_pref}{_c}"
+        ORIGENES[f"{W}/{_app}/{_dir}/accounts/{_c}/Media/{_sub} Audio"] = f"{_pref}{_c}"
 # Ruta de Android (no la de Ubuntu), para que el aviso a la galería funcione.
 DESTINO = Path("/storage/emulated/0/Download/Ubuntu/Transcribir")
 REGISTRO = Path.home() / ".local" / "share" / "ogg-transcribir" / "copiados.txt"
