@@ -3,6 +3,10 @@
 Ubuntu completo en el móvil Android, dentro de Termux, con **Claude Code** listo para usar
 desde el propio móvil o en remoto desde [claude.ai/code](https://claude.ai/code) y la app de Claude.
 
+**Tu móvil crea tu web, tus vídeos y tus anuncios.** Dile a Claude *"quiero una campaña para mi negocio"*,
+responde a sus preguntas y te prepara guion, vídeo con voz, landing page publicada y campaña de
+Facebook e Instagram, lista para que digas "adelante".
+
 > **Solo Android.** En iPhone no es posible: iOS no permite instalar Linux en el teléfono.
 > Desde un iPhone sí puedes usar Claude Code en remoto con la app de Claude o en
 > [claude.ai/code](https://claude.ai/code).
@@ -53,6 +57,34 @@ para que Android no cierre Termux.
 | Claude Code | arranca solo en tmux con Remote Control (`tmux attach -t <nombre>` para verlo; salir con `Ctrl+b` y `d`) |
 | `OGG` | copia los últimos audios de WhatsApp y WhatsApp Business a *Download/Ubuntu/Transcribir*. `OGG 10` copia 10 |
 | Herramientas | git, gh (GitHub), tmux, python3, ffmpeg, curl, nano |
+| Kit de marketing | ver abajo |
+
+## Kit de marketing: campañas de Facebook e Instagram
+
+Escribe `claude` y pide, con tus palabras: *"quiero una campaña para mi cafetería en Majadahonda"*.
+Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres gastar) y prepara:
+
+1. **Guion y textos** del anuncio, siguiendo las normas de Meta.
+2. **Vídeo vertical** para Reels y Stories con tus fotos, voz y subtítulos.
+3. **Landing page** con botón de WhatsApp, publicada gratis en GitHub Pages (dirección fija, funciona con el móvil apagado).
+4. **Campaña en Meta Ads**, creada **en pausa**. No se gasta nada hasta que tú digas "adelante".
+5. **Resultados**: *"¿cómo va mi campaña?"*.
+
+| Comando | Qué hace |
+|---|---|
+| `marketing-configurar` | conectar tu Facebook/Instagram y, si quieres, ElevenLabs (una vez) |
+| `video-anuncio` | vídeo 1080×1920 con fotos, voz y subtítulos |
+| `voz` / `voz-clonar` | texto a voz (gratis o con tu voz clonada) / clonar tu voz |
+| `landing-publicar` | publicar una carpeta web en GitHub Pages |
+| `meta` | crear, activar, pausar y ver resultados de campañas |
+| `ver-en-movil` | hacer visible un archivo en la galería del móvil |
+
+**Configuración, una sola vez:**
+- Facebook e Instagram → [docs/META.md](docs/META.md) (crear tu app de Meta y sacar el token, ~15 min).
+- GitHub para publicar webs → `gh auth login` (gratis).
+- Tu propia voz (opcional, ~5 USD/mes) → [docs/VOZ.md](docs/VOZ.md): cómo grabarla bien con el móvil y clonarla.
+
+Sin ElevenLabs los vídeos usan una voz gratuita de Microsoft (natural, de locutor).
 
 ## Uso diario
 
@@ -64,4 +96,5 @@ para que Android no cierre Termux.
 ## Privacidad
 
 El instalador no lleva claves ni datos de nadie. Cada persona inicia su propia sesión en
-Claude (`claude`) y, si quiere, en GitHub (`gh auth login`).
+Claude (`claude`) y, si quiere, en GitHub (`gh auth login`). Las claves de Meta y ElevenLabs
+se guardan solo en tu móvil (`~/.config/marketing/config.json`).

@@ -1,0 +1,33 @@
+#!/bin/bash
+# Publica una carpeta (con su index.html) en GitHub Pages: dirección fija, gratis y
+# siempre encendida aunque el móvil esté apagado.
+#   landing-publicar ~/Descargas/Campañas/cafe/web  cafe-majadahonda
+# Resultado: https://<tu-usuario>.github.io/cafe-majadahonda/
+# Requisito una sola vez:  gh auth login
+set -euo pipefail
+DIR="${1:?Uso: landing-publicar <carpeta> <nombre-corto-sin-espacios>}"
+NOMBRE="${2:?Falta el nombre corto (ej. cafe-majadahonda)}"
+NOMBRE="$(printf '%s' "$NOMBRE" | tr 'A-Z ' 'a-z-' | tr -cd 'a-z0-9-')"
+[ -f "$DIR/index.html" ] || { echo "No hay index.html en $DIR"; exit 1; }
+gh auth status >/dev/null 2>&1 || { echo "Primero conecta GitHub:  gh auth login"; exit 1; }
+
+USUARIO="$(gh api user -q .login)"
+ID="$(gh api user -q .id)"
+cd "$DIR"
+[ -d .git ] || git init -q -b main
+git config user.name >/dev/null || git config user.name "$USUARIO"
+git config user.email >/dev/null || git config user.email "$ID+$USUARIO@users.noreply.github.com"
+git add -A
+git commit -qm "Actualizar web $(date +%F\ %H:%M)" || true
+
+if gh repo view "$USUARIO/$NOMBRE" >/dev/null 2>&1; then
+  git remote get-url origin >/dev/null 2>&1 || git remote add origin "https://github.com/$USUARIO/$NOMBRE.git"
+  git push -q -u origin main
+else
+  gh repo create "$NOMBRE" --public --source . --push --description "Web publicada desde el móvil" >/dev/null
+fi
+gh api -X POST "repos/$USUARIO/$NOMBRE/pages" -f "source[branch]=main" -f "source[path]=/" >/dev/null 2>&1 || true
+
+URL="https://$USUARIO.github.io/$NOMBRE/"
+echo "Publicada: $URL"
+echo "(La primera vez GitHub tarda 1-2 minutos en mostrarla.)"

@@ -1,0 +1,12 @@
+#!/bin/bash
+# Avisa a Android de archivos nuevos para que salgan en la galería, el reproductor o Archivos.
+#   ver-en-movil ~/Descargas/Campañas/cafe/anuncio.mp4
+for f in "$@"; do
+  real="$(realpath "$f")"
+  movil="${real/#$HOME\/Descargas//storage/emulated/0/Download/Ubuntu}"
+  case "$movil" in
+    /storage/*) am broadcast --user 0 -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file://$movil" >/dev/null 2>&1 \
+                  && echo "En el móvil: ${movil#/storage/emulated/0/}" ;;
+    *) echo "Para verlo en el móvil, guárdalo dentro de ~/Descargas: $f" ;;
+  esac
+done
