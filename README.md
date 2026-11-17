@@ -12,27 +12,18 @@ desde el propio móvil o en remoto desde [claude.ai/code](https://claude.ai/code
 Termux es la app que hace de terminal y donde vivirá Ubuntu.
 **No la instales desde Google Play**: esa versión está abandonada y falla.
 
-**Opción A — desde GitHub (la más directa)**
-
 1. En el móvil, abre esta página con Chrome:
    <https://github.com/termux/termux-app/releases/latest>
-2. En *Assets*, pulsa el archivo que termina en **`arm64-v8a.apk`**
-   (por ejemplo `termux-app_v0.118.x+github-debug_arm64-v8a.apk`).
-   Si no sabes cuál es, el que termina en **`universal.apk`** vale para cualquier móvil.
+2. Baja hasta *Assets* y pulsa el archivo que termina en **`universal.apk`**.
+   Vale para cualquier móvil Android.
 3. Cuando termine la descarga, ábrelo. Android avisará de que Chrome no puede instalar apps:
    pulsa **Ajustes**, activa **Permitir de esta fuente**, vuelve atrás y pulsa **Instalar**.
 4. Si Play Protect avisa de una app desconocida, pulsa **Más detalles → Instalar de todas formas**.
+5. Abre Termux y espera unos segundos a que termine de prepararse.
 
-**Opción B — desde F-Droid**
-
-1. Instala F-Droid desde <https://f-droid.org> (mismo aviso de "fuente desconocida" que arriba).
-2. Abre F-Droid, busca **Termux** e instálalo.
-
-> No mezcles: si Termux viene de GitHub, sus complementos (Termux:API, etc.) también
-> de GitHub; si viene de F-Droid, de F-Droid. Si ya tenías Termux de Google Play,
-> desinstálalo antes.
-
-Abre Termux una vez y espera a que termine de preparar el entorno (unos segundos).
+> Si ya tenías Termux de Google Play, desinstálalo antes.
+> *(También existe en F-Droid; si lo instalas de ahí, sus complementos deben venir de F-Droid.
+> No hace falta: el método de arriba es el recomendado.)*
 
 ## Instalación
 
