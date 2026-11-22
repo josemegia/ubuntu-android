@@ -10,6 +10,14 @@
 - Herramientas instaladas: git, gh, tmux, python3, ffmpeg, curl, y las del kit de marketing:
   `meta`, `voz`, `voz-clonar`, `video-anuncio`, `landing-publicar`, `marketing-configurar`, `OGG`.
 
+# Su negocio
+
+- Si existe `~/Descargas/Mi negocio/negocio.md`, **léelo antes de nada**: son los datos reales de su negocio
+  (qué ofrece, precios, contacto, tono, cliente ideal) y sus fotos en `fotos/`. Los copia Conexpix desde su panel
+  y se actualizan solos. No le preguntes lo que ya está ahí, no inventes lo que no está, y no edites esa carpeta:
+  si algo ha cambiado, que lo cambie en su panel (app.conexpix.com → Mi página).
+- Su página está en la dirección que pone `negocio.md`. Para publicar una página de campaña usa `landing-publicar`.
+
 # Cómo trabajar con este usuario
 
 - Responde en español, corto y claro. El usuario puede no ser técnico: explica qué vas a hacer, no cómo funciona por dentro.

@@ -27,6 +27,11 @@ meta comprobar
 
 ## Paso 1 — Entrevista (máximo 2 tandas de preguntas)
 
+Antes de preguntar, lee `~/Descargas/Mi negocio/negocio.md` si existe: ya trae el negocio, la oferta, el cliente
+ideal, el contacto y fotos reales en `~/Descargas/Mi negocio/fotos/`. Confírmalo en una frase («Veo que vendes…»)
+y pregunta solo lo que falte (sobre todo zona, presupuesto y qué quiere anunciar esta vez). Puedes copiar sus fotos
+a la carpeta de la campaña (`ffmpeg -i foto.webp foto.jpg` si hace falta JPG).
+
 Pregunta en un solo mensaje, numerado, lo que falte de esto:
 1. ¿Cómo se llama tu negocio y qué ofreces? (producto o servicio estrella)
 2. ¿Dónde están tus clientes? (ciudad o barrio y cuántos km alrededor)
