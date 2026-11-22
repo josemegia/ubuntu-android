@@ -22,7 +22,7 @@ meta comprobar
 - Si falla por configuración: dile que abra **otra sesión de Termux** (deslizar desde el borde izquierdo
   → NEW SESSION), escriba `marketing-configurar` y siga las preguntas. La guía del token está en
   https://github.com/josemegia/ubuntu-android/blob/main/docs/META.md. **No le pidas que pegue claves en el chat.**
-- Para la landing hace falta GitHub: `gh auth status`. Si no, que ejecute `gh auth login` (en otra sesión).
+- Para la landing: si tiene Conexpix (`~/.conexpix/token`) no hace falta nada. Si no, GitHub: `gh auth status`; si falla, que ejecute `gh auth login` (en otra sesión).
 - Puedes preparar guion, vídeo y landing aunque Meta aún no esté configurado.
 
 ## Paso 1 — Entrevista (máximo 2 tandas de preguntas)
@@ -78,7 +78,9 @@ cp -r /opt/ubuntu-android/marketing/plantilla-landing ~/Descargas/Campañas/<nom
   (redúcelas: `ffmpeg -i in.jpg -vf scale=1200:-2 -q:v 4 foto1.jpg`).
 - Mensaje prellenado en la URL de WhatsApp codificado (python3 urllib.parse.quote).
 - Elige `COLOR_MARCA` acorde al negocio. Textos con la misma voz que el anuncio.
-- Publica: `landing-publicar ~/Descargas/Campañas/<nombre>/web <nombre-corto>` → URL fija `https://<usuario>.github.io/<nombre-corto>/`.
+- Publica: `landing-publicar ~/Descargas/Campañas/<nombre>/web <nombre-corto>`.
+  - Con Conexpix (existe `~/.conexpix/token`): queda en `https://<su-nombre>.conexpix.com/c/<nombre-corto>/`. No hace falta GitHub.
+  - Sin Conexpix: GitHub Pages, `https://<usuario>.github.io/<nombre-corto>/` (necesita `gh auth login`).
 - La página de privacidad sirve también como "URL de política de privacidad" de su app de Meta.
 
 ## Paso 5 — Campaña en Meta (EN PAUSA)

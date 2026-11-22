@@ -66,7 +66,7 @@ Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres g
 
 1. **Guion y textos** del anuncio, siguiendo las normas de Meta.
 2. **Vídeo vertical** para Reels y Stories con tus fotos, voz y subtítulos.
-3. **Landing page** con botón de WhatsApp, publicada gratis en GitHub Pages (dirección fija, funciona con el móvil apagado).
+3. **Landing page** con botón de WhatsApp, con dirección fija y visible con el móvil apagado: en tu página de Conexpix (`tu-nombre.conexpix.com/c/...`) o, si no usas Conexpix, gratis en GitHub Pages.
 4. **Campaña en Meta Ads**, creada **en pausa**. No se gasta nada hasta que tú digas "adelante".
 5. **Resultados**: *"¿cómo va mi campaña?"*.
 
@@ -75,13 +75,13 @@ Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres g
 | `marketing-configurar` | conectar tu Facebook/Instagram y, si quieres, ElevenLabs (una vez) |
 | `video-anuncio` | vídeo 1080×1920 con fotos, voz y subtítulos |
 | `voz` / `voz-clonar` | texto a voz (gratis o con tu voz clonada) / clonar tu voz |
-| `landing-publicar` | publicar una carpeta web en GitHub Pages |
+| `landing-publicar` | publicar una carpeta web (en Conexpix si lo tienes; si no, en GitHub Pages) |
 | `meta` | crear, activar, pausar y ver resultados de campañas |
 | `ver-en-movil` | hacer visible un archivo en la galería del móvil |
 
 **Configuración, una sola vez:**
 - Facebook e Instagram → [docs/META.md](docs/META.md) (crear tu app de Meta y sacar el token, ~15 min).
-- GitHub para publicar webs → `gh auth login` (gratis).
+- GitHub para publicar webs → `gh auth login` (gratis). No hace falta si usas Conexpix.
 - Tu propia voz (opcional, ~5 USD/mes) → [docs/VOZ.md](docs/VOZ.md): cómo grabarla bien con el móvil y clonarla.
 
 Sin ElevenLabs los vídeos usan una voz gratuita de Microsoft (natural, de locutor).

@@ -1,12 +1,17 @@
 #!/bin/bash
-# Publica una carpeta (con su index.html) en GitHub Pages: dirección fija, gratis y
-# siempre encendida aunque el móvil esté apagado.
+# Publica una carpeta (con su index.html) como página de campaña, con dirección fija y
+# visible aunque el móvil esté apagado.
 #   landing-publicar ~/Descargas/Campañas/cafe/web  cafe-majadahonda
-# Resultado: https://<tu-usuario>.github.io/cafe-majadahonda/
-# Requisito una sola vez:  gh auth login
+# Con Conexpix:  https://<tu-nombre>.conexpix.com/c/cafe-majadahonda/   (no hace falta nada más)
+# Sin Conexpix:  https://<tu-usuario>.github.io/cafe-majadahonda/      (requisito: gh auth login)
+# Para forzar GitHub aunque tengas Conexpix:  landing-publicar --github <carpeta> <nombre>
 set -euo pipefail
+GITHUB=0; [ "${1:-}" = --github ] && { GITHUB=1; shift; }
 DIR="${1:?Uso: landing-publicar <carpeta> <nombre-corto-sin-espacios>}"
 NOMBRE="${2:?Falta el nombre corto (ej. cafe-majadahonda)}"
+if [ "$GITHUB" = 0 ] && [ -x "$HOME/.local/bin/conexpix" ] && [ -s "$HOME/.conexpix/token" ]; then
+  exec "$HOME/.local/bin/conexpix" campana "$DIR" "$NOMBRE"
+fi
 NOMBRE="$(printf '%s' "$NOMBRE" | tr 'A-Z ' 'a-z-' | tr -cd 'a-z0-9-')"
 [ -f "$DIR/index.html" ] || { echo "No hay index.html en $DIR"; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "Primero conecta GitHub:  gh auth login"; exit 1; }
