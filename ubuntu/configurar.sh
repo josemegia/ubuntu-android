@@ -39,12 +39,12 @@ install -m 755 "$AQUI/bin/ogg-transcribir" /usr/local/bin/ogg-transcribir
 install -m 755 "$AQUI/bin/ver-en-movil" /usr/local/bin/ver-en-movil
 echo "NOMBRE_RC=$NOMBRE_RC" > "$CASA/.config/ubuntu-android/config"
 
-paso "Kit de marketing: meta, voz, voz-clonar, video-anuncio, landing-publicar, marketing-configurar"
+paso "Kit de marketing: meta, voz, voz-clonar, video-anuncio, video-avatar, landing-publicar, marketing-configurar"
 VENV=/opt/ubuntu-android-venv          # fuera de /opt/ubuntu-android, que se reemplaza en cada instalación
 [ -x "$VENV/bin/python" ] || python3 -m venv "$VENV"
 "$VENV/bin/pip" install -q --upgrade edge-tts
 M=/opt/ubuntu-android/marketing
-for par in meta:meta.py voz:voz.py voz-clonar:voz_clonar.py video-anuncio:video.py marketing-configurar:configurar.py; do
+for par in meta:meta.py voz:voz.py voz-clonar:voz_clonar.py video-anuncio:video.py video-avatar:avatar.py marketing-configurar:configurar.py; do
   printf '#!/bin/sh\nexec %s %s "$@"\n' "$VENV/bin/python" "$M/${par#*:}" > "/usr/local/bin/${par%%:*}"
   chmod 755 "/usr/local/bin/${par%%:*}"
 done

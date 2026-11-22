@@ -72,8 +72,9 @@ Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres g
 
 | Comando | Qué hace |
 |---|---|
-| `marketing-configurar` | conectar tu Facebook/Instagram y, si quieres, ElevenLabs (una vez) |
+| `marketing-configurar` | conectar tu Facebook/Instagram y, si quieres, ElevenLabs y HeyGen (una vez) |
 | `video-anuncio` | vídeo 1080×1920 con fotos, voz y subtítulos |
+| `video-avatar` | vídeo con tu avatar de HeyGen hablando (opcional, de pago en HeyGen) |
 | `voz` / `voz-clonar` | texto a voz (gratis o con tu voz clonada) / clonar tu voz |
 | `landing-publicar` | publicar una carpeta web (en Conexpix si lo tienes; si no, en GitHub Pages) |
 | `meta` | crear, activar, pausar y ver resultados de campañas |
@@ -83,6 +84,7 @@ Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres g
 - Facebook e Instagram → [docs/META.md](docs/META.md) (crear tu app de Meta y sacar el token, ~15 min).
 - GitHub para publicar webs → `gh auth login` (gratis). No hace falta si usas Conexpix.
 - Tu propia voz (opcional, ~5 USD/mes) → [docs/VOZ.md](docs/VOZ.md): cómo grabarla bien con el móvil y clonarla.
+- Tu avatar (opcional, de pago en HeyGen) → crea tu avatar en app.heygen.com, saca la clave en platform.heygen.com/api-keys y ejecuta `marketing-configurar`.
 
 Sin ElevenLabs los vídeos usan una voz gratuita de Microsoft (natural, de locutor).
 

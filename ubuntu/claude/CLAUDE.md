@@ -8,7 +8,7 @@
   es lento y puede colgarse.
 - `am` (Termux) está en el PATH: sirve para hablar con Android.
 - Herramientas instaladas: git, gh, tmux, python3, ffmpeg, curl, y las del kit de marketing:
-  `meta`, `voz`, `voz-clonar`, `video-anuncio`, `landing-publicar`, `marketing-configurar`, `OGG`.
+  `meta`, `voz`, `voz-clonar`, `video-anuncio`, `video-avatar` (HeyGen), `landing-publicar`, `marketing-configurar`, `OGG`.
 
 # Su negocio
 
@@ -23,6 +23,7 @@
 - Responde en español, corto y claro. El usuario puede no ser técnico: explica qué vas a hacer, no cómo funciona por dentro.
 - Para campañas, anuncios, vídeos promocionales o landing pages, usa el skill **campana**.
 - **Nunca actives nada que gaste dinero sin un "adelante" explícito.** Todo se crea en pausa.
+  `video-avatar` gasta créditos de su HeyGen: antes enséñale el guion y pregunta «¿Lo hago con tu avatar?».
 - Las claves viven en `~/.config/marketing/config.json`. No las muestres, no las copies a repos ni a webs.
   Si hace falta una clave nueva, pide al usuario que ejecute `marketing-configurar` en otra sesión de Termux.
 - Programas interactivos (`gh auth login`, `marketing-configurar`): pídele que los ejecute él en otra sesión

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Asistente para conectar tu cuenta de Meta (Facebook/Instagram) y, si quieres, ElevenLabs.
+"""Asistente para conectar tu cuenta de Meta (Facebook/Instagram) y, si quieres, ElevenLabs y HeyGen.
 
 Ejecútalo en una sesión aparte de Termux (desliza desde la izquierda → NEW SESSION):
     marketing-configurar
@@ -41,6 +41,20 @@ def elegir(titulo, opciones):
         r = pregunta("Número", "1")
         if r.isdigit() and 1 <= int(r) <= len(opciones):
             return opciones[int(r) - 1][0]
+
+
+def heygen_avatares(clave):
+    """Tus avatares de HeyGen; None si la clave no vale."""
+    req = urllib.request.Request("https://api.heygen.com/v3/avatars/looks?ownership=private&limit=50",
+                                 headers={"x-api-key": clave, "Accept": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            return json.load(r).get("data", [])
+    except urllib.error.HTTPError as e:
+        return None if e.code in (401, 403) else []
+    except OSError:
+        print("No hay conexión con HeyGen; guardo la clave y lo intentas luego.")
+        return []
 
 
 def main():
@@ -90,6 +104,25 @@ def main():
         v = pregunta("ID de tu voz en ElevenLabs si ya la tienes (si no, Enter y luego usa voz-clonar)", c.get("elevenlabs_voz", ""))
         if v:
             c["elevenlabs_voz"] = v
+
+    print("\n== 3. HeyGen: vídeos con tu avatar (opcional) ==")
+    print("Clave en https://platform.heygen.com/api-keys · tu avatar se crea en https://app.heygen.com")
+    k = pregunta("Clave de HeyGen (Enter para " + ("dejar la actual" if c.get("heygen_key") else "saltar") + ")")
+    if k:
+        c["heygen_key"] = k
+    if c.get("heygen_key"):
+        looks = heygen_avatares(c["heygen_key"])
+        if looks is None:
+            print("HeyGen no acepta esa clave. Revísala y vuelve a ejecutar marketing-configurar.")
+            if k:
+                c.pop("heygen_key", None)
+        elif not looks:
+            print("Clave correcta, pero aún no tienes avatar propio. Créalo en https://app.heygen.com y vuelve aquí.")
+        else:
+            elegido = elegir("¿Qué avatar uso en tus vídeos?", [(x["id"], x.get("name") or x["id"]) for x in looks])
+            c["heygen_avatar"] = elegido
+            c["heygen_avatar_nombre"] = next((x.get("name") for x in looks if x["id"] == elegido), "")
+            print("Avatar elegido:", c["heygen_avatar_nombre"] or elegido)
 
     with open(CONFIG, "w") as f:
         json.dump(c, f, indent=1)

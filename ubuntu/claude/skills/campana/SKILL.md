@@ -1,6 +1,6 @@
 ---
 name: campana
-description: Crea una campaña completa de Facebook e Instagram para el negocio del usuario a partir de preguntas sencillas — guion, textos del anuncio, vídeo vertical con voz y subtítulos, landing page publicada en GitHub Pages y campaña en Meta Ads EN PAUSA. Úsalo cuando el usuario hable de anuncios, campaña, Facebook, Instagram, conseguir clientes, promocionar su negocio, landing, web para su negocio, vídeo para anuncio o reel promocional, o pida resultados de una campaña.
+description: Crea una campaña completa de Facebook e Instagram para el negocio del usuario a partir de preguntas sencillas — guion, textos del anuncio, vídeo vertical con voz y subtítulos (o con su avatar de HeyGen), landing page publicada en GitHub Pages y campaña en Meta Ads EN PAUSA. Úsalo cuando el usuario hable de anuncios, campaña, Facebook, Instagram, conseguir clientes, promocionar su negocio, landing, web para su negocio, vídeo para anuncio o reel promocional, o pida resultados de una campaña.
 ---
 
 # Campaña de Facebook e Instagram desde el móvil
@@ -72,6 +72,18 @@ video-anuncio --guion guion.txt --fotos fotos --final "Escríbeme por WhatsApp" 
 - Si quiere grabar él la locución: que la grabe con la grabadora del móvil, la deje en la carpeta y usa `--audio`.
 - Si quiere su propia voz clonada: guía docs/VOZ.md y `voz-clonar`.
 - `video-anuncio` deja el vídeo visible en el móvil. Pídele que lo vea y te diga qué cambiar.
+
+### Con su avatar de HeyGen (si lo tiene)
+Si `video-avatar --comprobar` funciona, ofrécele la opción: «¿Lo hago con tu avatar hablando? Gasta créditos de tu HeyGen».
+Solo con su sí:
+```bash
+video-avatar --guion guion.txt --formato 9:16 --salida avatar.mp4
+```
+- Usa su voz de ElevenLabs si la tiene; si no, la de su avatar. `--audio` para su propia grabación.
+- Tarda de 2 a 10 minutos: avísale y sigue con la landing mientras tanto.
+- Solo con **su propio** avatar (su cara). Nunca el de otra persona ni famosos.
+- En el texto del anuncio o en el vídeo, indica que está hecho con IA (p. ej. «Vídeo creado con IA»).
+- Sin clave de HeyGen: que ejecute `marketing-configurar` en otra sesión. No le pidas la clave en el chat.
 
 ## Paso 4 — Landing page
 
