@@ -38,6 +38,9 @@ Termux es la app que hace de terminal y donde vivirá Ubuntu.
    curl -fsSL https://raw.githubusercontent.com/josemegia/ubuntu-android/main/instalar.sh | bash
    ```
 
+   **¿Tienes Conexpix?** Copia el comando de tu panel (app.conexpix.com → Dispositivos): es este mismo
+   con tu código (`… | CONEXPIX_CODIGO=ABCD2345 bash`) y deja también tu web conectada.
+
 3. Cuando Android lo pida, pulsa **Permitir** (acceso a archivos).
 4. Al terminar, cierra Termux del todo y vuelve a abrirlo: entrarás en Ubuntu.
 5. Escribe `claude` e inicia sesión (necesitas una cuenta de Claude Pro o superior).

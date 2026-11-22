@@ -2,6 +2,8 @@
 # Ubuntu para Android (Termux + proot-distro), con Claude Code y utilidades.
 # Uso, en Termux:
 #   curl -fsSL https://raw.githubusercontent.com/josemegia/ubuntu-android/main/instalar.sh | bash
+# Con Conexpix (tu web en <tu-nombre>.conexpix.com), con el código de tu panel, todo de una vez:
+#   curl -fsSL https://raw.githubusercontent.com/josemegia/ubuntu-android/main/instalar.sh | CONEXPIX_CODIGO=ABCD2345 bash
 # Se puede repetir: lo que ya está hecho se salta.
 set -euo pipefail
 
@@ -17,6 +19,7 @@ aviso() { printf '\033[1;33m%s\033[0m\n' "$*"; }
 fallo() { printf '\033[1;31mError: %s\033[0m\n' "$*" >&2; exit 1; }
 
 [ -d /data/data/com.termux ] && [ -n "${PREFIX:-}" ] || fallo "esto se ejecuta en Termux, no dentro de Ubuntu."
+CONEXPIX_CODIGO="$(printf '%s' "${CONEXPIX_CODIGO:-}" | tr -cd 'A-Za-z0-9')"
 
 # 1. Permiso de almacenamiento (Android muestra un aviso: pulsa "Permitir")
 paso "Acceso al almacenamiento del móvil"
@@ -91,6 +94,20 @@ else
 EOF
 fi
 
+# 7. Conexpix (solo si viene el código de emparejamiento del panel).
+#    </dev/null: con «curl | bash» la entrada es el propio script y nada de dentro debe leerla.
+CONEXPIX_OK=""
+if [ -n "$CONEXPIX_CODIGO" ]; then
+  paso "Conectando tu móvil con Conexpix"
+  if "$PREFIX/bin/ubuntu" -- env CONEXPIX_CODIGO="$CONEXPIX_CODIGO" bash -c \
+       'curl -fsSL https://app.conexpix.com/conexpix-conectar.sh -o /tmp/conexpix-conectar.sh && bash /tmp/conexpix-conectar.sh; r=$?; rm -f /tmp/conexpix-conectar.sh; exit $r' </dev/null; then
+    CONEXPIX_OK=1
+  else
+    aviso "No se pudo conectar con Conexpix. Pide un código nuevo en tu panel (Dispositivos) y, dentro de Ubuntu, ejecuta:"
+    aviso "  curl -fsSL https://app.conexpix.com/conexpix-conectar.sh -o c.sh && bash c.sh"
+  fi
+fi
+
 paso "¡Listo!"
 cat <<EOF
 Cierra Termux del todo y vuelve a abrirlo: entrarás directamente en Ubuntu.
@@ -101,6 +118,13 @@ La primera vez, dentro de Ubuntu:
      Después Claude arranca solo en segundo plano al abrir Termux,
      con el nombre "$NOMBRE_RC" en claude.ai/code y en la app de Claude.
   2. Opcional:  gh auth login   para usar GitHub.
+EOF
+[ -n "$CONEXPIX_OK" ] && cat <<'EOF'
+
+Conexpix: tu móvil ya está conectado. Al abrir Termux, tu web se publica sola
+y tu Claude encuentra los datos de tu negocio en Descargas/Ubuntu/Mi negocio.
+EOF
+cat <<EOF
 
 Recomendado: Ajustes de Android > Apps > Termux > Batería > Sin restricciones.
 EOF
