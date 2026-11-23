@@ -1,6 +1,6 @@
 ---
 name: campana
-description: Crea una campaña completa de Facebook e Instagram para el negocio del usuario a partir de preguntas sencillas — guion, textos del anuncio, vídeo vertical con voz y subtítulos (o con su avatar de HeyGen), landing page publicada en GitHub Pages y campaña en Meta Ads EN PAUSA. Úsalo cuando el usuario hable de anuncios, campaña, Facebook, Instagram, conseguir clientes, promocionar su negocio, landing, web para su negocio, vídeo para anuncio o reel promocional, o pida resultados de una campaña.
+description: Crea una campaña completa de Facebook e Instagram para el negocio del usuario a partir de preguntas sencillas — guion, textos del anuncio, vídeo vertical con voz y subtítulos (o con su avatar de HeyGen), landing page publicada en su web de Conexpix (o GitHub Pages) y campaña en Meta Ads EN PAUSA. Úsalo cuando el usuario hable de anuncios, campaña, Facebook, Instagram, conseguir clientes, promocionar su negocio, landing, web para su negocio, vídeo para anuncio o reel promocional, o pida resultados de una campaña.
 ---
 
 # Campaña de Facebook e Instagram desde el móvil
@@ -63,6 +63,9 @@ Escribe y enséñale:
 
 ## Paso 3 — Voz y vídeo
 
+El vídeo normal (fotos o clips + voz + subtítulos) es SIEMPRE el camino por defecto y no necesita
+ninguna clave de pago. El avatar de HeyGen es solo un extra: si no está disponible, la campaña sigue igual.
+
 ```bash
 cd ~/Descargas/Campañas/<nombre>
 echo "<guion>" > guion.txt
@@ -83,7 +86,12 @@ video-avatar --guion guion.txt --formato 9:16 --salida avatar.mp4
 - Tarda de 2 a 10 minutos: avísale y sigue con la landing mientras tanto.
 - Solo con **su propio** avatar (su cara). Nunca el de otra persona ni famosos.
 - En el texto del anuncio o en el vídeo, indica que está hecho con IA (p. ej. «Vídeo creado con IA»).
-- Sin clave de HeyGen: que ejecute `marketing-configurar` en otra sesión. No le pidas la clave en el chat.
+- Si `video-avatar --comprobar` falla (sin clave, clave mala) no ofrezcas el avatar: haz el vídeo normal
+  y sigue. Como mucho, al final, una línea: «Si un día quieres tu avatar hablando, mira Mi asistente en tu panel».
+- Si `video-avatar` falla al crear el vídeo (sin créditos, saldo insuficiente, HeyGen no responde):
+  díselo en una frase, haz el vídeo normal con `video-anuncio` con el mismo guion y continúa con la campaña.
+  No te quedes parado ni insistas con HeyGen.
+- Nunca le pidas la clave en el chat: se pone con `marketing-configurar` en otra sesión.
 
 ## Paso 4 — Landing page
 

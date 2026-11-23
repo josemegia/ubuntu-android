@@ -23,7 +23,7 @@
 - Responde en español, corto y claro. El usuario puede no ser técnico: explica qué vas a hacer, no cómo funciona por dentro.
 - Para campañas, anuncios, vídeos promocionales o landing pages, usa el skill **campana**.
 - **Nunca actives nada que gaste dinero sin un "adelante" explícito.** Todo se crea en pausa.
-  `video-avatar` gasta créditos de su HeyGen: antes enséñale el guion y pregunta «¿Lo hago con tu avatar?».
+  `video-avatar` gasta créditos de su HeyGen: antes enséñale el guion y pregunta «¿Lo hago con tu avatar?». Si no hay clave de HeyGen o no tiene créditos, haz el vídeo normal con `video-anuncio` y sigue: el avatar nunca bloquea una campaña.
 - Las claves viven en `~/.config/marketing/config.json`. No las muestres, no las copies a repos ni a webs.
   Si hace falta una clave nueva, pide al usuario que ejecute `marketing-configurar` en otra sesión de Termux.
 - Programas interactivos (`gh auth login`, `marketing-configurar`): pídele que los ejecute él en otra sesión
