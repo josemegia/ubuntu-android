@@ -33,30 +33,9 @@ chmod 440 "/etc/sudoers.d/$USUARIO"
 CASA="$(getent passwd "$USUARIO" | cut -d: -f6)"
 mkdir -p "$CASA/Descargas" "$CASA/.config/ubuntu-android"
 
-paso "Utilidades: claude-arrancar, ogg-transcribir (OGG)"
-install -m 755 "$AQUI/bin/claude-arrancar" /usr/local/bin/claude-arrancar
-install -m 755 "$AQUI/bin/ogg-transcribir" /usr/local/bin/ogg-transcribir
-install -m 755 "$AQUI/bin/ver-en-movil" /usr/local/bin/ver-en-movil
+paso "Utilidades y kit de marketing: claude-arrancar, OGG, meta, voz, video-anuncio, video-avatar, landing-publicar, marketing-configurar"
+bash "$AQUI/kit.sh" "$USUARIO"
 echo "NOMBRE_RC=$NOMBRE_RC" > "$CASA/.config/ubuntu-android/config"
-
-paso "Kit de marketing: meta, voz, voz-clonar, video-anuncio, video-avatar, landing-publicar, marketing-configurar"
-VENV=/opt/ubuntu-android-venv          # fuera de /opt/ubuntu-android, que se reemplaza en cada instalación
-[ -x "$VENV/bin/python" ] || python3 -m venv "$VENV"
-"$VENV/bin/pip" install -q --upgrade edge-tts
-M=/opt/ubuntu-android/marketing
-for par in meta:meta.py voz:voz.py voz-clonar:voz_clonar.py video-anuncio:video.py video-avatar:avatar.py marketing-configurar:configurar.py; do
-  printf '#!/bin/sh\nexec %s %s "$@"\n' "$VENV/bin/python" "$M/${par#*:}" > "/usr/local/bin/${par%%:*}"
-  chmod 755 "/usr/local/bin/${par%%:*}"
-done
-install -m 755 "$M/landing-publicar" /usr/local/bin/landing-publicar
-mkdir -p "$CASA/.config/marketing" "$CASA/.claude/skills" "$CASA/Descargas/Campañas"
-chmod 700 "$CASA/.config/marketing"
-rm -rf "$CASA/.claude/skills/campana"
-cp -r "$AQUI/claude/skills/campana" "$CASA/.claude/skills/campana"
-# Instrucciones para Claude: solo si no existen o siguen siendo las nuestras (no pisar ediciones del usuario)
-if [ ! -f "$CASA/.claude/CLAUDE.md" ] || head -1 "$CASA/.claude/CLAUDE.md" | grep -q 'ubuntu-android: archivo gestionado'; then
-  cp "$AQUI/claude/CLAUDE.md" "$CASA/.claude/CLAUDE.md"
-fi
 
 paso "Bloque en ~/.bashrc de $USUARIO"
 BASHRC="$CASA/.bashrc"
@@ -70,6 +49,8 @@ case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) PATH="$HOME/.local/bin:$PATH" ;;
 alias OGG=ogg-transcribir
 # Claude Code con Remote Control: arrancar en tmux si no está activo
 command -v claude-arrancar >/dev/null && claude-arrancar
+# Kit al día: como mucho una vez al día, en segundo plano y en silencio
+command -v kit-actualizar >/dev/null && (kit-actualizar --auto &) >/dev/null 2>&1
 # <<< ubuntu-android <<<
 EOF
 chown -R "$USUARIO:$USUARIO" "$CASA"

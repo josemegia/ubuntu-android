@@ -4,6 +4,7 @@
 #   curl -fsSL https://raw.githubusercontent.com/josemegia/ubuntu-android/main/kit-usuario.sh | bash
 # Instala en ~/.local: los comandos meta, voz, voz-clonar, video-anuncio, video-avatar,
 # landing-publicar y marketing-configurar, y la habilidad "campana" de Claude. Se puede repetir.
+# Después se actualiza solo: kit-actualizar, como mucho una vez al día al abrir Termux.
 set -euo pipefail
 
 REPO="josemegia/ubuntu-android"
@@ -27,6 +28,7 @@ mkdir -p "$KIT" "$BIN"
 rm -rf "$KIT/marketing"; cp -r "$SRC/marketing" "$KIT/marketing"
 install -m 755 "$SRC/bin/ver-en-movil" "$KIT/ver-en-movil"
 command -v ver-en-movil >/dev/null || ln -sf "$KIT/ver-en-movil" "$BIN/ver-en-movil"
+install -m 755 "$SRC/bin/kit-actualizar" "$BIN/kit-actualizar"
 
 paso "Voz gratuita (edge-tts)"
 if [ ! -f "$VENV/pyvenv.cfg" ] || ! "$VENV/bin/python" -m pip --version >/dev/null 2>&1; then
@@ -59,6 +61,15 @@ sed -i "s#/opt/ubuntu-android/#$KIT/#g" "$HOME/.claude/skills/campana/SKILL.md"
 sed "s#/opt/ubuntu-android/#$KIT/#g" "$SRC/claude/CLAUDE.md" > "$HOME/.claude/ubuntu-android-kit.md"
 touch "$HOME/.claude/CLAUDE.md"
 grep -qF '@ubuntu-android-kit.md' "$HOME/.claude/CLAUDE.md" || printf '\n@ubuntu-android-kit.md\n' >> "$HOME/.claude/CLAUDE.md"
+
+paso "Actualización automática (una vez al día, al abrir Termux)"
+BASHRC="$HOME/.bashrc"; touch "$BASHRC"
+sed -i '/# >>> ubuntu-android-kit >>>/,/# <<< ubuntu-android-kit <<</d' "$BASHRC"
+cat >> "$BASHRC" <<'FIN'
+# >>> ubuntu-android-kit >>>
+[ -x "$HOME/.local/bin/kit-actualizar" ] && ("$HOME/.local/bin/kit-actualizar" --auto &) >/dev/null 2>&1
+# <<< ubuntu-android-kit <<<
+FIN
 
 case ":$PATH:" in *":$BIN:"*) ;; *) echo "Aviso: añade ~/.local/bin a tu PATH (o cierra y abre Termux).";; esac
 paso "Listo"

@@ -1,0 +1,44 @@
+#!/bin/bash
+# Actualiza el kit (comandos de vídeo y anuncios + instrucciones de Claude) desde GitHub.
+#   kit-actualizar          ahora, enseñando lo que hace
+#   kit-actualizar --auto   en silencio y como mucho una vez al día (lo lanza ~/.bashrc al abrir Termux)
+# No toca tus claves (~/.config/marketing) ni tus campañas.
+main() {
+  REPO="josemegia/ubuntu-android"
+  RAMA="main"
+  ESTADO="$HOME/.cache/ubuntu-android"
+  mkdir -p "$ESTADO"
+
+  if [ "${1:-}" = "--auto" ]; then
+    # Una vez al día, y nunca dos a la vez.
+    [ -n "$(find "$ESTADO/revisado" -mmin -1440 2>/dev/null)" ] && return 0
+    exec 9>"$ESTADO/lock"; flock -n 9 || return 0
+    touch "$ESTADO/revisado"
+    exec >>"$ESTADO/actualizar.log" 2>&1
+    echo "--- $(date '+%F %T')"
+  fi
+
+  ultima="$(curl -fsSL --max-time 20 -H 'Accept: application/vnd.github.sha' "https://api.github.com/repos/$REPO/commits/$RAMA" 2>/dev/null)" || { echo "Sin conexión con GitHub; se intentará otro día."; return 0; }
+  if [ "${1:-}" = "--auto" ] && [ "$ultima" = "$(cat "$ESTADO/version" 2>/dev/null)" ]; then
+    echo "Al día ($ultima)."; return 0
+  fi
+
+  if [ -d "$HOME/.local/share/ubuntu-android/marketing" ]; then
+    # Instalado sin sudo (kit-usuario.sh): se repite tal cual.
+    curl -fsSL "https://raw.githubusercontent.com/$REPO/$ultima/kit-usuario.sh" | bash || return 1
+  elif [ -d /opt/ubuntu-android ] && sudo -n true 2>/dev/null; then
+    TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
+    curl -fsSL "https://github.com/$REPO/archive/$ultima.tar.gz" | tar -xz -C "$TMP" || return 1
+    SRC="$(echo "$TMP"/*/ubuntu)"
+    [ -f "$SRC/kit.sh" ] || { echo "La descarga no trae kit.sh."; return 1; }
+    sudo rm -rf /opt/ubuntu-android.nuevo
+    sudo cp -r "$SRC" /opt/ubuntu-android.nuevo
+    sudo rm -rf /opt/ubuntu-android && sudo mv /opt/ubuntu-android.nuevo /opt/ubuntu-android
+    sudo bash /opt/ubuntu-android/kit.sh "$(id -un)" || return 1
+  else
+    echo "No encuentro el kit instalado (o falta sudo). Instálalo con kit-usuario.sh."; return 1
+  fi
+  echo "$ultima" > "$ESTADO/version"
+  echo "Kit actualizado ($ultima)."
+}
+main "$@"; exit $?
