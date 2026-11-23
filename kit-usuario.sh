@@ -29,10 +29,17 @@ install -m 755 "$SRC/bin/ver-en-movil" "$KIT/ver-en-movil"
 command -v ver-en-movil >/dev/null || ln -sf "$KIT/ver-en-movil" "$BIN/ver-en-movil"
 
 paso "Voz gratuita (edge-tts)"
-if [ ! -x "$VENV/bin/python" ]; then
-  python3 -m venv "$VENV" 2>/dev/null || fallo "python3 no puede crear entornos (falta python3-venv)."
+if [ ! -f "$VENV/pyvenv.cfg" ] || ! "$VENV/bin/python" -m pip --version >/dev/null 2>&1; then
+  rm -rf "$VENV"
+  if ! python3 -m venv "$VENV" >/dev/null 2>&1; then
+    # Sin python3-venv (y sin sudo para instalarlo): entorno sin pip y pip descargado aparte.
+    rm -rf "$VENV"
+    python3 -m venv --without-pip "$VENV" || fallo "python3 no puede crear entornos."
+    curl -fsSL https://bootstrap.pypa.io/get-pip.py -o "$TMP/get-pip.py"
+    "$VENV/bin/python" "$TMP/get-pip.py" -q || fallo "no se pudo instalar pip."
+  fi
 fi
-"$VENV/bin/pip" install -q --upgrade edge-tts
+"$VENV/bin/python" -m pip install -q --upgrade edge-tts
 
 paso "Comandos"
 for par in meta:meta.py voz:voz.py voz-clonar:voz_clonar.py video-anuncio:video.py video-avatar:avatar.py marketing-configurar:configurar.py; do
