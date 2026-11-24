@@ -24,6 +24,8 @@ import urllib.error
 import urllib.request
 import uuid
 
+import movil
+
 API = os.environ.get("ARTCRAFT_API", "https://api.storyteller.ai")
 CONFIG = os.environ.get("MARKETING_CONFIG", os.path.expanduser("~/.config/marketing/config.json"))
 # Cloudflare rechaza (403, error 1010) el User-Agent por defecto de Python, también en la descarga.
@@ -127,10 +129,7 @@ def bajar(url, salida, extension_defecto):
                 break
             f.write(trozo)
     print(f"Listo: {salida}")
-    try:   # el archivo ya está guardado: que falte o se cuelgue ver-en-movil no es un error
-        subprocess.run(["ver-en-movil", salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, timeout=30)
-    except (OSError, subprocess.TimeoutExpired):
-        pass
+    movil.entregar(salida, "Tu escena de ArtCraft está lista")
 
 
 def main():

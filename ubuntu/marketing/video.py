@@ -18,6 +18,8 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 import voz  # noqa: E402
 
+import movil
+
 W, H, FPS = 1080, 1920, 30
 IMG = (".jpg", ".jpeg", ".png", ".webp", ".heic")
 
@@ -135,10 +137,7 @@ def main():
     print("Montando el vídeo (en el móvil tarda 1-3 minutos)...")
     subprocess.run(cmd, check=True)
     print("Vídeo listo:", a.salida)
-    try:   # el archivo ya está guardado: que falte o se cuelgue ver-en-movil no es un error
-        subprocess.run(["ver-en-movil", a.salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, timeout=30)
-    except (OSError, subprocess.TimeoutExpired):
-        pass
+    movil.entregar(a.salida, "Tu vídeo está listo")
 
 
 if __name__ == "__main__":

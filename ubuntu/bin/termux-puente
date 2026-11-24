@@ -1,0 +1,12 @@
+#!/bin/sh
+# Puente Ubuntu → Termux:API. Se instala con el nombre de cada comando (termux-notification,
+# termux-battery-status...) y ejecuta el homónimo de Termux. Requiere la app Termux:API y,
+# en Termux, "pkg install termux-api" (el instalador ya lo hace).
+T=/data/data/com.termux/files/usr
+n="$(basename "$0")"
+# -e y no -x: dentro de proot el usuario es otro y el permiso de ejecución puede no verse aunque funcione.
+if [ ! -e "$T/bin/$n" ]; then
+  echo "$n: instala la app Termux:API y, en Termux, 'pkg install termux-api'" >&2
+  exit 127
+fi
+exec env PREFIX="$T" PATH="$T/bin:$PATH" LD_LIBRARY_PATH="$T/lib" "$T/bin/$n" "$@"

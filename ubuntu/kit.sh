@@ -6,8 +6,12 @@ USUARIO="${1:-android}"
 AQUI="$(cd "$(dirname "$0")" && pwd)"
 CASA="$(getent passwd "$USUARIO" | cut -d: -f6)"
 
-for b in claude-arrancar ogg-transcribir ver-en-movil kit-actualizar; do
+for b in claude-arrancar ogg-transcribir ver-en-movil kit-actualizar avisar termux-puente; do
   install -m 755 "$AQUI/bin/$b" "/usr/local/bin/$b"
+done
+# Comandos de Termux:API disponibles desde Ubuntu (todos pasan por el puente)
+for t in termux-notification termux-notification-remove termux-battery-status termux-toast termux-vibrate termux-clipboard-get termux-clipboard-set termux-share; do
+  ln -sf termux-puente "/usr/local/bin/$t"
 done
 
 VENV=/opt/ubuntu-android-venv          # fuera de /opt/ubuntu-android, que se reemplaza en cada instalación

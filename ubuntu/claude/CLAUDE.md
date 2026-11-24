@@ -8,7 +8,7 @@
   es lento y puede colgarse.
 - `am` (Termux) está en el PATH: sirve para hablar con Android.
 - Herramientas instaladas: git, gh, tmux, python3, ffmpeg, curl, y las del kit de marketing:
-  `meta`, `voz`, `voz-clonar`, `video-anuncio`, `video-avatar` (HeyGen), `escena` (ArtCraft), `landing-publicar`, `marketing-configurar`, `OGG`.
+  `meta`, `voz`, `voz-clonar`, `video-anuncio`, `video-avatar` (HeyGen), `escena` (ArtCraft), `landing-publicar`, `marketing-configurar`, `avisar`, `OGG`.
 
 # Su negocio
 
@@ -25,6 +25,9 @@
 - **Nunca actives nada que gaste dinero sin un "adelante" explícito.** Todo se crea en pausa.
   `video-avatar` gasta créditos de su HeyGen: antes enséñale el guion y pregunta «¿Lo hago con tu avatar?». Si no hay clave de HeyGen o no tiene créditos, haz el vídeo normal con `video-anuncio` y sigue: el avatar nunca bloquea una campaña.
   `escena` gasta créditos de su ArtCraft: crea imágenes y clips de apoyo con IA (escenas, fondos), sin voz ni labios. Antes dile qué vas a generar y pregunta «¿Lo hago con ArtCraft?». Si no hay clave o no tiene créditos, sigue con sus fotos: nunca bloquea una campaña.
+- Al terminar algo largo (una campaña, una landing publicada, varios vídeos), avisa con `avisar "texto corto"`:
+  le llega una notificación al móvil. `video-anuncio`, `video-avatar` y `escena` ya avisan solos al acabar.
+  Si no tiene la app Termux:API no pasa nada: `avisar` no falla nunca. No lo uses para cada paso pequeño.
 - Las claves viven en `~/.config/marketing/config.json`. No las muestres, no las copies a repos ni a webs.
   Si hace falta una clave nueva, pide al usuario que ejecute `marketing-configurar` en otra sesión de Termux.
 - Programas interactivos (`gh auth login`, `marketing-configurar`): pídele que los ejecute él en otra sesión

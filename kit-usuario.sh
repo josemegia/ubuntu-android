@@ -2,7 +2,7 @@
 # Kit de vídeos y anuncios para un Ubuntu que YA tienes (instalado a tu manera), sin sudo y sin tocar lo tuyo.
 # Se ejecuta DENTRO de Ubuntu, con tu usuario:
 #   curl -fsSL https://raw.githubusercontent.com/josemegia/ubuntu-android/main/kit-usuario.sh | bash
-# Instala en ~/.local: los comandos meta, voz, voz-clonar, video-anuncio, video-avatar, escena,
+# Instala en ~/.local: los comandos meta, voz, voz-clonar, video-anuncio, video-avatar, escena, avisar,
 # landing-publicar y marketing-configurar, y la habilidad "campana" de Claude. Se puede repetir.
 # Después se actualiza solo: kit-actualizar, como mucho una vez al día al abrir Termux.
 set -euo pipefail
@@ -29,6 +29,12 @@ rm -rf "$KIT/marketing"; cp -r "$SRC/marketing" "$KIT/marketing"
 install -m 755 "$SRC/bin/ver-en-movil" "$KIT/ver-en-movil"
 command -v ver-en-movil >/dev/null || ln -sf "$KIT/ver-en-movil" "$BIN/ver-en-movil"
 install -m 755 "$SRC/bin/kit-actualizar" "$BIN/kit-actualizar"
+install -m 755 "$SRC/bin/avisar" "$BIN/avisar"
+install -m 755 "$SRC/bin/termux-puente" "$BIN/termux-puente"
+# Comandos de Termux:API disponibles desde Ubuntu (todos pasan por el puente)
+for t in termux-notification termux-notification-remove termux-battery-status termux-toast termux-vibrate termux-clipboard-get termux-clipboard-set termux-share; do
+  ln -sf termux-puente "$BIN/$t"
+done
 
 paso "Voz gratuita (edge-tts)"
 if [ ! -f "$VENV/pyvenv.cfg" ] || ! "$VENV/bin/python" -m pip --version >/dev/null 2>&1; then

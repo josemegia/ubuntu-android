@@ -1,0 +1,11 @@
+#!/bin/bash
+# Manda una notificación al móvil: «Tu vídeo está listo».
+#   avisar "Tu vídeo está listo"
+#   avisar "Campaña creada en pausa" "Mi negocio"      (el segundo texto es el título)
+# Nunca falla ni se queda esperando: si falta la app Termux:API, no hace nada.
+texto="${1:-}"
+[ -n "$texto" ] || exit 0
+command -v termux-notification >/dev/null 2>&1 || exit 0
+timeout -k 2 "${AVISAR_ESPERA:-8}" termux-notification --title "${2:-Tu asistente}" --content "$texto" \
+  --sound --priority high </dev/null >/dev/null 2>&1
+exit 0

@@ -38,7 +38,7 @@ fi
 paso "Actualizando Termux"
 pkg update -y
 pkg upgrade -y -o Dpkg::Options::=--force-confnew
-pkg install -y proot-distro curl tar
+pkg install -y proot-distro curl tar termux-api
 
 # 3. Ubuntu
 RAIZ="$PREFIX/var/lib/proot-distro/installed-rootfs/$DISTRO"

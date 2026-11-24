@@ -151,6 +151,12 @@ Errores habituales:
 - WhatsApp no vinculado → en la página de Facebook: Configuración → Cuentas vinculadas → WhatsApp.
 - Falta método de pago en la cuenta publicitaria → que lo añada en Meta Business Suite.
 
+Cuando la campaña quede creada en pausa (y cada vez que termines algo que tardó varios minutos), avísale:
+```bash
+avisar "Tu campaña está lista para revisar. No se gasta nada hasta que digas adelante."
+```
+Le llega una notificación al móvil. Los vídeos y las escenas ya avisan solos. Si no llega, no pasa nada: sigue.
+
 ## Paso 6 — Seguimiento
 
 `meta resultados` (activas) o `meta resultados <id>`. Explica en cristiano: cuánta gente lo vio,

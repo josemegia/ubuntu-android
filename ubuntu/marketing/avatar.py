@@ -24,6 +24,7 @@ import urllib.request
 import uuid
 
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
+import movil  # noqa: E402
 import voz  # noqa: E402
 
 API = os.environ.get("HEYGEN_API", "https://api.heygen.com")
@@ -170,10 +171,7 @@ def main():
     url = (d.get("captioned_video_url") if a.subtitulos else None) or d["video_url"]
     bajar(url, a.salida)
     print(f"Vídeo listo: {a.salida} ({d.get('duration') or '?'} s)")
-    try:   # el archivo ya está guardado: que falte o se cuelgue ver-en-movil no es un error
-        subprocess.run(["ver-en-movil", a.salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, timeout=30)
-    except (OSError, subprocess.TimeoutExpired):
-        pass
+    movil.entregar(a.salida, "Tu vídeo con avatar está listo")
 
 
 if __name__ == "__main__":

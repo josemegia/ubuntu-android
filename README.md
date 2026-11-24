@@ -24,6 +24,10 @@ Termux es la app que hace de terminal y donde vivirá Ubuntu.
    pulsa **Ajustes**, activa **Permitir de esta fuente**, vuelve atrás y pulsa **Instalar**.
 4. Si Play Protect avisa de una app desconocida, pulsa **Más detalles → Instalar de todas formas**.
 5. Abre Termux y espera unos segundos a que termine de prepararse.
+6. Instala también **Termux:API** (sirve para que Ubuntu te mande notificaciones, como «Tu vídeo está listo»):
+   abre <https://github.com/termux/termux-api/releases/latest>, baja el `.apk` de *Assets* e instálalo igual
+   que en los pasos 3 y 4. No hace falta abrirla. Tiene que venir de GitHub, como Termux: la de Google Play
+   no funciona con él.
 
 > Si ya tenías Termux de Google Play, desinstálalo antes.
 > *(También existe en F-Droid; si lo instalas de ahí, sus complementos deben venir de F-Droid.
@@ -83,6 +87,7 @@ Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres g
 | `landing-publicar` | publicar una carpeta web (en Conexpix si lo tienes; si no, en GitHub Pages) |
 | `meta` | crear, activar, pausar y ver resultados de campañas |
 | `ver-en-movil` | hacer visible un archivo en la galería del móvil |
+| `avisar` | mandar una notificación al móvil («Tu vídeo está listo»); necesita la app Termux:API |
 
 **Configuración, una sola vez:**
 - Facebook e Instagram → [docs/META.md](docs/META.md) (crear tu app de Meta y sacar el token, ~15 min).
@@ -94,6 +99,9 @@ Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres g
 Sin ElevenLabs los vídeos usan una voz gratuita de Microsoft (natural, de locutor).
 
 ## Uso diario
+
+- Notificaciones: si instalaste esto antes de que existieran, instala la app Termux:API (paso 0, punto 6) y,
+  en Termux **fuera de Ubuntu** (`exit`), ejecuta `pkg install termux-api`. Sin eso todo funciona igual, solo que sin avisos.
 
 - `ubuntu` (en Termux): entrar en Ubuntu. `exit` para volver a Termux.
 - Abrir Termux sin entrar en Ubuntu: `SIN_UBUNTU=1 bash`.
