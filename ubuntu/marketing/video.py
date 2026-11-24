@@ -135,7 +135,10 @@ def main():
     print("Montando el vídeo (en el móvil tarda 1-3 minutos)...")
     subprocess.run(cmd, check=True)
     print("Vídeo listo:", a.salida)
-    subprocess.run(["ver-en-movil", a.salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    try:   # el archivo ya está guardado: que falte o se cuelgue ver-en-movil no es un error
+        subprocess.run(["ver-en-movil", a.salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, timeout=30)
+    except (OSError, subprocess.TimeoutExpired):
+        pass
 
 
 if __name__ == "__main__":

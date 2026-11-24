@@ -170,7 +170,10 @@ def main():
     url = (d.get("captioned_video_url") if a.subtitulos else None) or d["video_url"]
     bajar(url, a.salida)
     print(f"Vídeo listo: {a.salida} ({d.get('duration') or '?'} s)")
-    subprocess.run(["ver-en-movil", a.salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    try:   # el archivo ya está guardado: que falte o se cuelgue ver-en-movil no es un error
+        subprocess.run(["ver-en-movil", a.salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, timeout=30)
+    except (OSError, subprocess.TimeoutExpired):
+        pass
 
 
 if __name__ == "__main__":

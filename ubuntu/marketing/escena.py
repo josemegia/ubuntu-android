@@ -127,7 +127,10 @@ def bajar(url, salida, extension_defecto):
                 break
             f.write(trozo)
     print(f"Listo: {salida}")
-    subprocess.run(["ver-en-movil", salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    try:   # el archivo ya está guardado: que falte o se cuelgue ver-en-movil no es un error
+        subprocess.run(["ver-en-movil", salida], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, timeout=30)
+    except (OSError, subprocess.TimeoutExpired):
+        pass
 
 
 def main():
