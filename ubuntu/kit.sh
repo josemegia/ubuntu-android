@@ -14,7 +14,7 @@ VENV=/opt/ubuntu-android-venv          # fuera de /opt/ubuntu-android, que se re
 [ -x "$VENV/bin/python" ] || python3 -m venv "$VENV"
 "$VENV/bin/pip" install -q --upgrade edge-tts
 M=/opt/ubuntu-android/marketing
-for par in meta:meta.py voz:voz.py voz-clonar:voz_clonar.py video-anuncio:video.py video-avatar:avatar.py marketing-configurar:configurar.py; do
+for par in meta:meta.py voz:voz.py voz-clonar:voz_clonar.py video-anuncio:video.py video-avatar:avatar.py escena:escena.py marketing-configurar:configurar.py; do
   printf '#!/bin/sh\nexec %s %s "$@"\n' "$VENV/bin/python" "$M/${par#*:}" > "/usr/local/bin/${par%%:*}"
   chmod 755 "/usr/local/bin/${par%%:*}"
 done

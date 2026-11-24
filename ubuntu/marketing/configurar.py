@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Asistente para conectar tu cuenta de Meta (Facebook/Instagram) y, si quieres, ElevenLabs y HeyGen.
+"""Asistente para conectar tu cuenta de Meta (Facebook/Instagram) y, si quieres, ElevenLabs, HeyGen y ArtCraft.
 
 Ejecútalo en una sesión aparte de Termux (desliza desde la izquierda → NEW SESSION):
     marketing-configurar
@@ -55,6 +55,20 @@ def heygen_avatares(clave):
     except OSError:
         print("No hay conexión con HeyGen; guardo la clave y lo intentas luego.")
         return []
+
+
+def artcraft_clave_valida(clave):
+    """True si ArtCraft acepta la clave, False si no, None si no se pudo comprobar."""
+    # Un trabajo inventado da 404 con clave buena y 401 con clave mala. Cloudflare rechaza el User-Agent de Python.
+    req = urllib.request.Request("https://api.storyteller.ai/v1/omni_api/job_status/job/jinf_test000000000000000000000",
+                                 headers={"Authorization": f"Bearer {clave}", "User-Agent": "ubuntu-android-escena/1.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=60):
+            return True
+    except urllib.error.HTTPError as e:
+        return True if e.code == 404 else False if e.code == 401 else None
+    except OSError:
+        return None
 
 
 def main():
@@ -123,6 +137,21 @@ def main():
             c["heygen_avatar"] = elegido
             c["heygen_avatar_nombre"] = next((x.get("name") for x in looks if x["id"] == elegido), "")
             print("Avatar elegido:", c["heygen_avatar_nombre"] or elegido)
+
+    print("\n== 4. ArtCraft: escenas y clips de apoyo con IA (opcional) ==")
+    print("Clave en https://app.getartcraft.com → Account → Settings → API Keys.")
+    print("Si no te aparece ese apartado, pídele a ArtCraft que te lo active. Planes: https://getartcraft.com/pricing")
+    k = pregunta("Clave de ArtCraft (Enter para " + ("dejar la actual" if c.get("artcraft_key") else "saltar") + ")")
+    if k:
+        if not k.startswith("artcraft_api_") or len(k) != 53:
+            print("Esa clave no tiene la forma de las de ArtCraft (empiezan por artcraft_api_ y tienen 53 caracteres). No la guardo.")
+        else:
+            valida = artcraft_clave_valida(k)
+            if valida is False:
+                print("ArtCraft no acepta esa clave. Revísala y vuelve a ejecutar marketing-configurar.")
+            else:
+                c["artcraft_key"] = k
+                print("Clave de ArtCraft correcta." if valida else "No he podido comprobarla ahora; la guardo y la pruebas luego con  escena comprobar.")
 
     with open(CONFIG, "w") as f:
         json.dump(c, f, indent=1)

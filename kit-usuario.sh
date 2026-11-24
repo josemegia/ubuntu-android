@@ -2,7 +2,7 @@
 # Kit de vídeos y anuncios para un Ubuntu que YA tienes (instalado a tu manera), sin sudo y sin tocar lo tuyo.
 # Se ejecuta DENTRO de Ubuntu, con tu usuario:
 #   curl -fsSL https://raw.githubusercontent.com/josemegia/ubuntu-android/main/kit-usuario.sh | bash
-# Instala en ~/.local: los comandos meta, voz, voz-clonar, video-anuncio, video-avatar,
+# Instala en ~/.local: los comandos meta, voz, voz-clonar, video-anuncio, video-avatar, escena,
 # landing-publicar y marketing-configurar, y la habilidad "campana" de Claude. Se puede repetir.
 # Después se actualiza solo: kit-actualizar, como mucho una vez al día al abrir Termux.
 set -euo pipefail
@@ -44,7 +44,7 @@ fi
 "$VENV/bin/python" -m pip install -q --upgrade edge-tts
 
 paso "Comandos"
-for par in meta:meta.py voz:voz.py voz-clonar:voz_clonar.py video-anuncio:video.py video-avatar:avatar.py marketing-configurar:configurar.py; do
+for par in meta:meta.py voz:voz.py voz-clonar:voz_clonar.py video-anuncio:video.py video-avatar:avatar.py escena:escena.py marketing-configurar:configurar.py; do
   printf '#!/bin/sh\nUA_PYTHON=%s exec %s %s "$@"\n' "$VENV/bin/python" "$VENV/bin/python" "$KIT/marketing/${par#*:}" > "$BIN/${par%%:*}"
   chmod 755 "$BIN/${par%%:*}"
 done

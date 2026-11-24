@@ -33,7 +33,7 @@ chmod 440 "/etc/sudoers.d/$USUARIO"
 CASA="$(getent passwd "$USUARIO" | cut -d: -f6)"
 mkdir -p "$CASA/Descargas" "$CASA/.config/ubuntu-android"
 
-paso "Utilidades y kit de marketing: claude-arrancar, OGG, meta, voz, video-anuncio, video-avatar, landing-publicar, marketing-configurar"
+paso "Utilidades y kit de marketing: claude-arrancar, OGG, meta, voz, video-anuncio, video-avatar, escena, landing-publicar, marketing-configurar"
 bash "$AQUI/kit.sh" "$USUARIO"
 echo "NOMBRE_RC=$NOMBRE_RC" > "$CASA/.config/ubuntu-android/config"
 

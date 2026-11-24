@@ -1,6 +1,6 @@
 ---
 name: campana
-description: Crea una campaña completa de Facebook e Instagram para el negocio del usuario a partir de preguntas sencillas — guion, textos del anuncio, vídeo vertical con voz y subtítulos (o con su avatar de HeyGen), landing page publicada en su web de Conexpix (o GitHub Pages) y campaña en Meta Ads EN PAUSA. Úsalo cuando el usuario hable de anuncios, campaña, Facebook, Instagram, conseguir clientes, promocionar su negocio, landing, web para su negocio, vídeo para anuncio o reel promocional, o pida resultados de una campaña.
+description: Crea una campaña completa de Facebook e Instagram para el negocio del usuario a partir de preguntas sencillas — guion, textos del anuncio, vídeo vertical con voz y subtítulos (o con su avatar de HeyGen, y planos de apoyo de ArtCraft si lo tiene), landing page publicada en su web de Conexpix (o GitHub Pages) y campaña en Meta Ads EN PAUSA. Úsalo cuando el usuario hable de anuncios, campaña, Facebook, Instagram, conseguir clientes, promocionar su negocio, landing, web para su negocio, vídeo para anuncio o reel promocional, o pida resultados de una campaña.
 ---
 
 # Campaña de Facebook e Instagram desde el móvil
@@ -64,7 +64,8 @@ Escribe y enséñale:
 ## Paso 3 — Voz y vídeo
 
 El vídeo normal (fotos o clips + voz + subtítulos) es SIEMPRE el camino por defecto y no necesita
-ninguna clave de pago. El avatar de HeyGen es solo un extra: si no está disponible, la campaña sigue igual.
+ninguna clave de pago. El avatar de HeyGen y las escenas de ArtCraft son solo extras: si no están disponibles,
+la campaña sigue igual.
 
 ```bash
 cd ~/Descargas/Campañas/<nombre>
@@ -92,6 +93,27 @@ video-avatar --guion guion.txt --formato 9:16 --salida avatar.mp4
   díselo en una frase, haz el vídeo normal con `video-anuncio` con el mismo guion y continúa con la campaña.
   No te quedes parado ni insistas con HeyGen.
 - Nunca le pidas la clave en el chat: se pone con `marketing-configurar` en otra sesión.
+
+### Planos de apoyo con ArtCraft (si lo tiene)
+ArtCraft crea imágenes y clips cortos con IA: una escena, un fondo, un plano de ambiente. Sirve para vestir el
+anuncio cuando faltan fotos o para abrir con algo llamativo. **No pone voz ni mueve los labios**: la voz sigue
+siendo `video-anuncio` (o `video-avatar`).
+
+Si `escena comprobar` funciona y le vendría bien, ofréceselo diciendo qué harías: «Te faltan fotos del local.
+¿Genero dos imágenes de apoyo con ArtCraft? Gasta créditos de tu cuenta». Solo con su sí:
+```bash
+escena imagen "interior de una panadería artesanal al amanecer, luz cálida, sin texto" -o fotos/apoyo1.png
+escena video "la cámara avanza despacio hacia el mostrador" --inicio https://su-web/c/campana/foto.jpg --dur 5 -o clip.mp4
+```
+- Sale en vertical (9:16). Las imágenes van a la carpeta `fotos` y entran en `video-anuncio` como una foto más.
+- Empieza por imágenes (baratas y rápidas). Un clip de vídeo cuesta bastante más: uno o dos como mucho, y avísale.
+- `--ref` y `--inicio` necesitan una dirección de internet: publica antes la foto con `landing-publicar`.
+- Pide en la descripción que no haya texto ni logotipos: la IA los escribe mal.
+- No inventes lo que vende: nada de productos, locales, personas o resultados que no sean reales. Es ambiente, no prueba.
+  Nunca caras de personas reales ni famosos. Indica que hay imágenes creadas con IA.
+- Si `escena comprobar` falla (sin clave, clave mala) no lo ofrezcas. Si `escena` falla al generar (sin créditos,
+  ArtCraft no responde, lo rechaza): díselo en una frase y sigue con sus fotos. No insistas.
+- Si tarda demasiado, `escena` da un código `jinf_...`: recógelo después con `escena recoger <código>`.
 
 ## Paso 4 — Landing page
 

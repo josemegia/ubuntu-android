@@ -75,9 +75,10 @@ Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres g
 
 | Comando | Qué hace |
 |---|---|
-| `marketing-configurar` | conectar tu Facebook/Instagram y, si quieres, ElevenLabs y HeyGen (una vez) |
+| `marketing-configurar` | conectar tu Facebook/Instagram y, si quieres, ElevenLabs, HeyGen y ArtCraft (una vez) |
 | `video-anuncio` | vídeo 1080×1920 con fotos, voz y subtítulos |
 | `video-avatar` | vídeo con tu avatar de HeyGen hablando (opcional, de pago en HeyGen) |
+| `escena` | imágenes y clips de apoyo con IA en ArtCraft: escenas, fondos (opcional, de pago en ArtCraft; sin voz) |
 | `voz` / `voz-clonar` | texto a voz (gratis o con tu voz clonada) / clonar tu voz |
 | `landing-publicar` | publicar una carpeta web (en Conexpix si lo tienes; si no, en GitHub Pages) |
 | `meta` | crear, activar, pausar y ver resultados de campañas |
@@ -88,6 +89,7 @@ Claude te hace unas preguntas (qué ofreces, dónde, a quién, cuánto quieres g
 - GitHub para publicar webs → `gh auth login` (gratis). No hace falta si usas Conexpix.
 - Tu propia voz (opcional, ~5 USD/mes) → [docs/VOZ.md](docs/VOZ.md): cómo grabarla bien con el móvil y clonarla.
 - Tu avatar (opcional, de pago en HeyGen) → crea tu avatar en app.heygen.com, saca la clave en platform.heygen.com/api-keys y ejecuta `marketing-configurar`.
+- Escenas con IA (opcional, de pago en ArtCraft) → saca la clave en app.getartcraft.com (Account → Settings → API Keys; si no te aparece, pide a ArtCraft que te la active) y ejecuta `marketing-configurar`. Sirve para planos de apoyo; no pone voz.
 
 Sin ElevenLabs los vídeos usan una voz gratuita de Microsoft (natural, de locutor).
 
@@ -101,5 +103,5 @@ Sin ElevenLabs los vídeos usan una voz gratuita de Microsoft (natural, de locut
 ## Privacidad
 
 El instalador no lleva claves ni datos de nadie. Cada persona inicia su propia sesión en
-Claude (`claude`) y, si quiere, en GitHub (`gh auth login`). Las claves de Meta y ElevenLabs
+Claude (`claude`) y, si quiere, en GitHub (`gh auth login`). Las claves de Meta, ElevenLabs, HeyGen y ArtCraft
 se guardan solo en tu móvil (`~/.config/marketing/config.json`).
